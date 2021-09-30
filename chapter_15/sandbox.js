@@ -1,17 +1,44 @@
-class User {
-  constructor(username, email){
-    // this.username = 'mario';
-    this.username = username;
-    this.email = email;
-  }
+function User(username, email){
+  this.username = username;
+  this.email = email;
+  // this.login = function(){
+  //   console.log(`${this.username} has logged in`);
+  // };
 }
 
-const userOne = new User('luigi', 'luigi@thenetninja.co.uk');
-const userTwo = new User('mario', 'mario@thenetninja.co.uk');
+User.prototype.login = function(){
+  console.log(`${this.username} has logged in`);
+  return this;
+};
 
-console.log(userOne, userTwo);
+User.prototype.logout = function(){
+  console.log(`${this.username} has logged out`);
+  return this;
+};
 
-// the 'new' keyword
-// 1 - it creates a new empty object {}
-// 2 - it binds the value of 'this' to the new empty object
-// 3 - it calls the constructor function to 'build' the object
+function Admin(username, email, title){
+  User.call(this, username, email);
+  this.title = title;
+}
+
+Admin.prototype = Object.create(User.prototype);
+
+Admin.prototype.deleteUser = function() {
+  console.log(`User deleted`);
+}
+
+// class User {
+//   constructor(username, email){
+//     // this.username = 'mario';
+//     this.username = username;
+//     this.email = email;
+//   }
+// }
+
+
+const userOne = new User('mario', 'mario@thenetninja.co.uk');
+const userTwo = new User('luigi', 'luigi@thenetninja.co.uk');
+const userThree = new Admin('Shaun', 'shaun@thenetninja.co.uk', 'captain');
+
+userOne.login().logout();
+userThree.login().logout();
